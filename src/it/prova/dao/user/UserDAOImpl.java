@@ -323,7 +323,39 @@ public class UserDAOImpl extends AbstractMySQLDAO implements UserDAO {
 	@Override
 	public User Login(String loginInput, String passwordInput) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		User result = new User();
+
+		if (isNotActive())
+			throw new Exception("Connessione non attiva. Impossibile effettuare operazioni DAO.");
+
+		if (loginInput == null || loginInput.isBlank() && passwordInput == null || passwordInput.isBlank())
+			throw new Exception("Valore di input non ammesso.");
+		
+		try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM user WHERE login = ? AND password = ?;")) {
+
+			ps.setString(1, loginInput);
+			ps.setString(2, passwordInput);
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					result.setNome(rs.getString("nome"));
+					result.setCognome(rs.getString("cognome"));
+					result.setLogin(rs.getString("login"));
+					result.setPassword(rs.getString("password"));
+					result.setDateCreated(rs.getDate("dateCreated"));
+					result.setId(rs.getLong("id"));
+				}// niente catch qui
+				else {
+					result = null;
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw e;
+			}
+
+			return result;
+			
+		}
 	}
 
 }
