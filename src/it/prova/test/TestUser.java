@@ -38,9 +38,11 @@ public class TestUser {
 			//testFindAllUsernameThatStartsWith(userService);
 			//System.out.println("In tabella ci sono " + userService.listAll().size() + " elementi.");
 			
-			testFindAllCreatedBefore(userService);
-			
-			
+			//testFindAllCreatedBefore(userService);
+			//System.out.println("In tabella ci sono " + userService.listAll().size() + " elementi.");
+
+			testSearchBySurnameAndNameThatStartsWith(userService);
+			System.out.println("In tabella ci sono " + userService.listAll().size() + " elementi.");
 			
 			
 			
@@ -151,6 +153,28 @@ public class TestUser {
 		
 		System.out.println(".......testFindAllCreatedBefore fine.............");
 	}
+	
+	public static void testSearchBySurnameAndNameThatStartsWith(UserService userService) throws Exception{
+		System.out.println(".......testSearchBySurnameAndNameThatStartsWith inizio.............");
+		
+		String cognomeInput = "Bendotti";
+		String inizialeNomeInput = "iv";
+		
+		List<User> listaUtenti = userService.cercaPerCognomeENomeCheInziaCon(cognomeInput, inizialeNomeInput);
+		for (User userItem : listaUtenti) {
+			System.out.println(userItem);
+		}
+		
+		System.out.println(".......testSearchBySurnameAndNameThatStartsWith fine.............");
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 
 }

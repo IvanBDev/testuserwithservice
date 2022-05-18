@@ -293,7 +293,7 @@ public class UserDAOImpl extends AbstractMySQLDAO implements UserDAO {
 		if (cognomeInput == null || cognomeInput.isBlank() && inzialeNomeInput == null || inzialeNomeInput.isBlank())
 			throw new Exception("Valore di input non ammesso.");
 		
-		try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM user WHERE cognome = ? AND nome = ?;")) {
+		try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM user WHERE cognome = ? HAVING nome LIKE ?;")) {
 
 			ps.setString(1, cognomeInput);
 			ps.setString(2, inzialeNomeInput + "%");
