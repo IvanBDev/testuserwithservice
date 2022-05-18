@@ -1,5 +1,7 @@
 package it.prova.test;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -33,8 +35,15 @@ public class TestUser {
 			
 			//E TUTTI I TEST VANNO FATTI COSI'
 			
-			testFindAllUsernameThatStartsWith(userService);
-
+			//testFindAllUsernameThatStartsWith(userService);
+			//System.out.println("In tabella ci sono " + userService.listAll().size() + " elementi.");
+			
+			testFindAllCreatedBefore(userService);
+			
+			
+			
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -122,6 +131,25 @@ public class TestUser {
 		}
 		
 		System.out.println(".......testFindAllUsernameThatStartsWith fine.............");
+	}
+	
+	public static void testFindAllCreatedBefore(UserService userService) throws Exception{
+		System.out.println(".......testFindAllCreatedBefore inizio.............");
+		
+		Date dataConfrontoString = null;
+		try {
+			dataConfrontoString = new SimpleDateFormat("dd/MM/yyyy").parse("10/05/2021");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		List<User> listaUtenti = userService.cercaTuttiQuelliCreatiPrimaDi(dataConfrontoString);
+		for (User userItem : listaUtenti) {
+			System.out.println(userItem);
+		}
+		
+		System.out.println(".......testFindAllCreatedBefore fine.............");
 	}
 	
 
