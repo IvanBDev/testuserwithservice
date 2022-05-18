@@ -41,9 +41,11 @@ public class TestUser {
 			//testFindAllCreatedBefore(userService);
 			//System.out.println("In tabella ci sono " + userService.listAll().size() + " elementi.");
 
-			testSearchBySurnameAndNameThatStartsWith(userService);
-			System.out.println("In tabella ci sono " + userService.listAll().size() + " elementi.");
+			//testSearchBySurnameAndNameThatStartsWith(userService);
+			//System.out.println("In tabella ci sono " + userService.listAll().size() + " elementi.");
 			
+			testLogin(userService);
+			//System.out.println("In tabella ci sono " + userService.listAll().size() + " elementi.");
 			
 			
 		} catch (Exception e) {
@@ -168,7 +170,17 @@ public class TestUser {
 		System.out.println(".......testSearchBySurnameAndNameThatStartsWith fine.............");
 	}
 	
-	
+	public static void testLogin(UserService userService) throws Exception{
+		System.out.println(".......testLogin inizio.............");
+		
+		String loginInput = "iv.bendotti@yahoo.com";
+		String passwordInput = "iv.bendotti2002";
+		
+		User userLogin = userService.accedi(loginInput, passwordInput);
+		System.out.println(userLogin);
+		
+		System.out.println(".......testLogin fine.............");
+	}
 	
 	
 	
