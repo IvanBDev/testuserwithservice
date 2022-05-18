@@ -19,19 +19,21 @@ public class TestUser {
 			// ora con il service posso fare tutte le invocazioni che mi servono
 			System.out.println("In tabella ci sono " + userService.listAll().size() + " elementi.");
 
-			testInserimentoNuovoUser(userService);
-			System.out.println("In tabella ci sono " + userService.listAll().size() + " elementi.");
+			//testInserimentoNuovoUser(userService);
+			//System.out.println("In tabella ci sono " + userService.listAll().size() + " elementi.");
 
-			testRimozioneUser(userService);
-			System.out.println("In tabella ci sono " + userService.listAll().size() + " elementi.");
+			//testRimozioneUser(userService);
+			//System.out.println("In tabella ci sono " + userService.listAll().size() + " elementi.");
 
-			testFindByExample(userService);
-			System.out.println("In tabella ci sono " + userService.listAll().size() + " elementi.");
+			//testFindByExample(userService);
+			//System.out.println("In tabella ci sono " + userService.listAll().size() + " elementi.");
 
-			testUpdateUser(userService);
-			System.out.println("In tabella ci sono " + userService.listAll().size() + " elementi.");
+			//testUpdateUser(userService);
+			//System.out.println("In tabella ci sono " + userService.listAll().size() + " elementi.");
 			
 			//E TUTTI I TEST VANNO FATTI COSI'
+			
+			testFindAllUsernameThatStartsWith(userService);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -41,7 +43,7 @@ public class TestUser {
 
 	private static void testInserimentoNuovoUser(UserService userService) throws Exception {
 		System.out.println(".......testInserimentoNuovoUser inizio.............");
-		User newUserInstance = new User("mauro", "rossi", "avavv", "bobobo", new Date());
+		User newUserInstance = new User("Paolo", "Bendotti", "p.b@tiscali.it", "nonMiricordoMailePassword", new Date());
 		if (userService.inserisciNuovo(newUserInstance) != 1)
 			throw new RuntimeException("testInserimentoNuovoUser FAILED ");
 
@@ -108,5 +110,19 @@ public class TestUser {
 
 		System.out.println(".......testUpdateUser inizio.............");
 	}
+	
+	public static void testFindAllUsernameThatStartsWith(UserService userService) throws Exception{
+		System.out.println(".......testFindAllUsernameThatStartsWith inizio.............");
+		
+		String iniziale = "pa";
+		List<User> listaUtenti = userService.cercaTuttiQuelliCheUsernameIniziaCon(iniziale);
+		
+		for (User userItem : listaUtenti) {
+			System.out.println(userItem);
+		}
+		
+		System.out.println(".......testFindAllUsernameThatStartsWith fine.............");
+	}
+	
 
 }
