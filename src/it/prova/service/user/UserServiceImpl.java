@@ -143,7 +143,20 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<User> cercaTuttiQuelliCheUsernameIniziaCon(String iniziale) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		List<User> result = new ArrayList<>();
+		try(Connection connection = MyConnection.getConnection(Constants.DRIVER_NAME, Constants.CONNECTION_URL)) {
+
+			// inietto la connection nel dao
+			userDao.setConnection(connection);
+
+			// eseguo quello che realmente devo fare
+			result = userDao.findAllUsernameThatStartsWith(iniziale);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} 
+		return result;
 	}
 
 	@Override
