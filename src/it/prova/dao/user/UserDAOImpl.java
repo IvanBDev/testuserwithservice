@@ -238,10 +238,6 @@ public class UserDAOImpl extends AbstractMySQLDAO implements UserDAO {
 				e.printStackTrace();
 				throw e;
 			}
-			
-			/*for (User userItem : result) {
-				System.out.println(userItem);
-			}*/
 
 			return result;
 
@@ -251,7 +247,38 @@ public class UserDAOImpl extends AbstractMySQLDAO implements UserDAO {
 	@Override
 	public List<User> findAllCreatedBefore(Date dataConfronto) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		List<User> result = new ArrayList<User>();
+
+		if (isNotActive())
+			throw new Exception("Connessione non attiva. Impossibile effettuare operazioni DAO.");
+
+		if (dataConfronto == null)
+			throw new Exception("Valore di input non ammesso.");
+
+		try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM user WHERE dateCreated < ?;")) {
+
+			ps.setDate(1, new java.sql.Date(dataConfronto.getTime()));
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					User userTemp = new User();
+					userTemp.setNome(rs.getString("nome"));
+					userTemp.setCognome(rs.getString("cognome"));
+					userTemp.setLogin(rs.getString("login"));
+					userTemp.setPassword(rs.getString("password"));
+					userTemp.setDateCreated(rs.getDate("dateCreated"));
+					userTemp.setId(rs.getLong("id"));
+
+					result.add(userTemp);
+				} // niente catch qui
+
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw e;
+			}
+
+			return result;
+			
+		}
 	}
 
 	@Override
